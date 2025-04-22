@@ -26,6 +26,11 @@ export default function Home() {
     router.push("/posts");
   };
 
+  const handleCancel = () => {
+    cancelForm();
+    router.push("/posts");
+  }
+
   return (
     <main className="editor">
       <form className="form">
@@ -109,7 +114,7 @@ export default function Home() {
           {post.id ? "Actualizar" : "Agregar"}
         </button>
 
-        <button className="button-form delete-form" onClick={cancelForm}>
+        <button className="button-form delete-form" onClick={handleCancel}>
           Cancelar
         </button>
         {message && <p className="message">{message}</p>}

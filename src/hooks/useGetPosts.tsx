@@ -4,6 +4,7 @@ import { get_posts } from "@/services/get_posts";
 import { Post, UseGetPosts } from "@/types/types";
 import { get_post } from "@/services/get_post";
 import { obj_post } from "@/utils/post";
+import { useAuth } from "@/context/ContextAuth";
 
 export const useGetPosts = (
   allPosts: string | null,
@@ -11,11 +12,13 @@ export const useGetPosts = (
 ): UseGetPosts => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [post, setPost] = useState<Post>(obj_post);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (allPosts !== null) {
       const getPosts = async () => {
-        const results = await get_posts();
+        if (!user.user_id) return;
+        const results = await get_posts(user.user_id);
         if (results !== null) {
           setPosts(results);
         }
