@@ -7,10 +7,17 @@ import iconMenu from "../assets/menu.svg";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const { login, logout, user } = useAuth();
   const [active, setActive] = useState<boolean>(false); 
+  const router = useRouter(); 
+
+  const handleLogout = () => {
+    logout(); 
+    router.push("/")
+  }
   return (
     <header className="header">
       <nav className="nav">
@@ -37,7 +44,7 @@ export const Header = () => {
                 />
                 <p className="name-user">{user.name}</p>
               </div>
-              <button className="button-nav logout" onClick={logout}>
+              <button className="button-nav logout" onClick={handleLogout}>
                 Cerrar sesión
               </button>
             </section>
