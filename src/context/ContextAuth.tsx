@@ -25,7 +25,7 @@ export default function ProviderAuth({ children }: { children: ReactNode }) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "/",
+        redirectTo: "https://cms-your-blog.vercel.app",
       },
     });
 
