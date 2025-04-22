@@ -1,0 +1,115 @@
+.page-docs {
+  width: 70%;
+  height: 100vh;
+  overflow-y: auto;
+  margin: auto;
+  padding: 70px 10px 10px 10px;
+}
+
+.title-docs {
+  color: #fff;
+}
+
+.subtitle-docs {
+  color: #ddd;
+  padding-bottom: 20px;
+}
+
+.section-details {
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content-details {
+  font-size: 16px;
+  font-weight: 500;
+  color: #eee;
+}
+
+.list-tools-docs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title-section {
+  color: #fff;
+}
+
+.tool-docs {
+  color: #aaa;
+  font-size: 16px;
+}
+
+.container-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.box-credential {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.note-credential {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ed2e2e;
+}
+.back-credential {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #101010;
+}
+.credential {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.user-id {
+  font-weight: bold;
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+  transition: 0.5s;
+}
+
+.button-show {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.message-docs {
+    font-size: 16px; 
+    color: greenyellow; 
+    font-weight: 500;
+    transform: translateY(16px);
+    opacity: 0;
+    visibility: hidden;
+    transition: .5s; 
+}
+
+.hidden-message {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transition: .5s; 
+}
+.icon-copy {
+    cursor: pointer; 
+}
+@media (max-width: 768px) {
+  .page-docs {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+}

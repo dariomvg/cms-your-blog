@@ -1,0 +1,112 @@
+.page-posts {
+  width: 100%;
+  height: 100vh;
+  padding: 60px 10px 10px 10px;
+}
+
+.title-page-posts {
+  color: #fff;
+  padding-bottom: 20px;
+}
+
+.list-posts {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.card-post {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #101010;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.container-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.date-card {
+  color: #ddd;
+}
+
+.title-card {
+  color: #fff;
+}
+
+.description-card {
+  max-width: 70%;
+  color: #aaa;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.link-card {
+  text-decoration: none;
+  color: #0952d1;
+  font-size: 16px;
+  transition: color .5s;
+}
+.link-card:hover {
+  color: #2b93fa;
+  transition: color .5s;
+
+}
+.container-buttons-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  padding-top: 8px;
+}
+
+.btn-card {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete {
+  background-color: #c81b29;
+  color: #fff;
+}
+
+.edit {
+  background-color: #404348;
+  color: #fff;
+}
+
+.section-without-posts {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+.title-without-posts {
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+
+.link-without-post {
+  color: #0952d1;
+  font-size: 16px;
+  text-decoration: none;
+}
+

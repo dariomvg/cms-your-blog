@@ -1,0 +1,36 @@
+.page-post {
+  width: 70%;
+  height: 100vh;
+  padding-top: 60px;
+  margin: auto;
+}
+
+.markdown-dark {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #101010;
+  color: #cdd6f4;
+  padding: 10px;
+}
+
+.markdown-dark h1,
+.markdown-dark h2,
+.markdown-dark h3 {
+  color: #89b4fa;
+}
+
+.markdown-dark a {
+  color: #74c7ec;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .page-post {
+    width: 100%; 
+    margin: 0;
+    overflow-y: auto;
+  }
+}

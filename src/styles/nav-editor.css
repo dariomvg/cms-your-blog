@@ -1,0 +1,75 @@
+.control-group {
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom:20px;
+}
+
+.control-group button {
+    border-radius: 5px;
+    padding: 8px; 
+    background-color: #101010;
+    color: #ddd;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid transparent;
+    transition: .5s;
+    cursor: pointer;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    box-shadow: 0 5px 10px #171f3c;
+}
+
+.control-group button:hover {
+    border-color: #2b93fa;
+    transition: .5s;
+}
+
+.is-active {
+    border-color: #1d60e7;
+}
+
+.section-elements {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  
+}
+.space {
+    gap: 20px;
+}
+
+.container-elements {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+
+@media (max-width: 768px) {
+    .section-elements {
+        width: 100%; 
+        flex-wrap: wrap;
+    }
+    .container-elements {
+
+        flex-wrap: wrap; 
+    }
+
+    .control-group {
+        gap: 12px; 
+    }
+
+    .space {
+        gap: 16px;
+    }
+  }
+
+
+
