@@ -9,6 +9,7 @@ import {
 import { UseAuth, User } from "../types/types";
 import { supabase } from "../supabase/supabase";
 import { obj_user } from "../utils/user";
+import { urlApp } from "@/utils/options";
 
 const ContextAuth = createContext<UseAuth | null>(null);
 
@@ -25,7 +26,7 @@ export default function ProviderAuth({ children }: { children: ReactNode }) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://cms-your-blog.vercel.app",
+        redirectTo: urlApp,
       },
     });
 

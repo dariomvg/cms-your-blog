@@ -1,124 +1,40 @@
-"use client";
-import { useEditorConfig } from "../hooks/useEditorConfig";
-import { EditorProvider } from "@tiptap/react";
-import { usePosts } from "../context/contextPosts";
-import { useRouter } from "next/navigation";
-import { NavEditor } from "@/components/NavEditor";
-import "@/styles/editor.css";
+import Link from "next/link";
+import "@/styles/home.css";
 
-export default function Home() {
-  const { extensions } = useEditorConfig();
-  const {
-    submitPost,
-    handleChange,
-    changeIsPublic,
-    post,
-    html,
-    setHtml,
-    cancelForm,
-    message,
-    isPublic,
-  } = usePosts();
-  const router = useRouter();
-
-  const handleSubmit = () => {
-    submitPost();
-    router.push("/posts");
-  };
-
-  const handleCancel = () => {
-    cancelForm();
-    router.push("/posts");
-  }
-
+export default function Main() {
   return (
-    <main className="editor">
-      <form className="form">
-        <h1 className="title-form">Metadatos para el artículo</h1>
-        <div className="container-input">
-          <label htmlFor="title" className="label-form">
-            Título
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={post.title}
-            required
-            className="input-form"
-            placeholder="Cómo mejorar el rendimiento en React..."
-            onChange={handleChange}
-          />
-        </div>
-        <div className="container-input">
-          <label htmlFor="description" className="label-form">
-            Descripción
-          </label>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            className="input-form"
-            value={post.description}
-            required
-            placeholder="En este artículo te explico 5 técnicas para optimizar aplicaciones React"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="container-input">
-          <label htmlFor="keyboards" className="label-form">
-            Claves(separadas por comas)
-          </label>
-          <input
-            type="text"
-            id="keyboards"
-            name="keyboards"
-            value={post.keyboards}
-            required
-            className="input-form"
-            placeholder="React, rendimiento, optimización, JavaScript"
-            onChange={handleChange}
-          />
-        </div>
+    <main className="main">
+      <section className="container-main">
+        <h1 className="title-main">Gestiona tus artículos...</h1>
+        <h2 className="subtitle-main">
+          creando y manejando tus propios artículos desde un solo lugar
+        </h2>
+        <Link href="/editor/post" className="link-main">
+          Comenzar
+        </Link>
+      </section>
 
-        <div className="container-input check">
-          <label htmlFor="is_public" className="label-form">
-            {post.is_public !== null ? (
-              <div className="check-label">
-                <p>Actualmente {post.is_public ? "público" : "privado"}</p>
-                <p>Artículo {isPublic ? "público" : "privado"}</p>
-              </div>
-            ) : (
-              <p>Artículo {isPublic ? "público" : "privado"}</p>
-            )}
-          </label>
-          <input
-            type="checkbox"
-            name="is_public"
-            id="is_public"
-            checked={isPublic}
-            required
-            onChange={changeIsPublic}
-            title="Selecciona para privarlo"
-          />
+      <section className="section-features">
+        <div className="feature">
+          <h3 className="title-feature">Soporte para imágenes</h3>
+          <p className="detail-feature">
+            Manejo de imagenes optimizado, solo agregando la url de esa misma
+          </p>
         </div>
-      </form>
-      <EditorProvider
-        slotBefore={<NavEditor />}
-        extensions={extensions}
-        content={html}
-        onUpdate={({ editor }) => setHtml(editor.getHTML())}
-      />
-      <div className="container-buttons-form">
-        <button className="button-form" onClick={handleSubmit}>
-          {post.id ? "Actualizar" : "Agregar"}
-        </button>
-
-        <button className="button-form delete-form" onClick={handleCancel}>
-          Cancelar
-        </button>
-        {message && <p className="message">{message}</p>}
-      </div>
+        <div className="feature">
+          <h3 className="title-feature">Editor completo para artículos</h3>
+          <p className="detail-feature">
+            Todas las herramientas incluidas para tus blogs y/o portafolios web
+          </p>
+        </div>
+        <div className="feature">
+          <h3 className="title-feature">Contenido manejado con markdown</h3>
+          <p className="detail-feature">
+            Todo se maneja con markdown por lo que es más versátil, simple y
+            rápido
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

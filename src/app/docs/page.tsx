@@ -1,18 +1,19 @@
 "use client";
-import "@/styles/docs.css";
-import { urlApp } from "@/utils/options";
+import { useAuth } from "@/context/ContextAuth";
 import { useState } from "react";
 import iconVisible from "@/assets/visible.svg";
 import iconHidden from "@/assets/hidden.svg";
-import { useAuth } from "@/context/ContextAuth";
 import iconCopy from "@/assets/copy.svg";
+import "@/styles/docs.css";
+import { api_all_posts, api_unique_post } from "@/utils/options";
 
 export default function Docs() {
   const [show, setShow] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const { user } = useAuth();
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(`${urlApp}/api/posts/your_user_id`);
+
+  const handleCopy = async (api: string) => {
+    await navigator.clipboard.writeText(api);
     setMessage("Copiado");
     setTimeout(() => {
       setMessage("");
@@ -20,96 +21,134 @@ export default function Docs() {
   };
 
   return (
-    <main className="page-docs">
-      <h1 className="title-docs">CMS Blog</h1>
-      <h2 className="subtitle-docs">Manejador de contenido</h2>
-      <hr />
-      <section className="section-details">
-        <p className="content-details">
-          Maneja tu contenido para tu blog o portafolio, creando artículos
-          completos con editor con todas las herramientas, editandolos cuando
-          quieras, mostrando solo los que quieras y eliminandolos cuando lo
-          desees.
-        </p>
-        <ul className="list-tools-docs">
-          <h3 className="title-section"></h3>
-          <li className="tool-docs">Bloques de códigos</li>
-          <li className="tool-docs">Blockquotes</li>
-          <li className="tool-docs">Imagenes(sin servidor para manejar)</li>
-          <li className="tool-docs">Links</li>
-          <li className="tool-docs">Listas</li>
-          <li className="tool-docs">Tablas</li>
-          <li className="tool-docs">Markdown</li>
-        </ul>
-      </section>
-      <hr />
-      <section className="section-details">
-        <h3 className="title-section">Uso de artículos</h3>
-        <p className="content-details">
-          CMS Blog provide una url para mostrar tus artículos en tu blog,
-          portafolio u otro{" "}
-        </p>
-
-        <div className="container-credentials">
-          <h3 className="title-section">URL</h3>
-          <p className="content-details">
-            Retorna todos los artículos públicos que hayas creado
-          </p>
-          
-          <div className="box-credential">
-            <div className="back-credential">
-              <p className="credential">{`${urlApp}/api/posts/your_user_id`}</p>
-            </div>
-            <img
-              src={iconCopy.src}
-              alt="icon copy"
-              width={25}
-              height={25}
-              onClick={() => handleCopy()}
-              className="icon-copy"
-            />
-            <p className={`message-docs ${message ? "hidden-message" : ""}`}>
-            {message}
-          </p>
-          </div>
+    <main className="main-docs">
+      <aside className="aside-docs">
+        <h1 className="title-aside-docs">Documentación</h1>
+        <div className="container-links-docs">
+          <a href="#inicio" className="link-docs">
+            Inicio
+          </a>
+          <a href="#herramientas" className="link-docs">
+            Herramientas
+          </a>
+          <a href="#apis" className="link-docs">
+            API's
+          </a>
+          <a href="#credenciales" className="link-docs">
+            Credenciales
+          </a>
         </div>
+      </aside>
+      <section className="section-page-docs">
+        <section className="section-details-docs" id="inicio">
+          <h2 className="title-details-docs">Gestor blog</h2>
+          <p className="details-docs">
+            Gestiona tus artículos para tus proyectos como pueden ser un blog o
+            portfolio personal. Aquí encontrarás todo lo necesario para
+            comenzar. Uso, herramientas, manejo del contenido, conocer las
+            distintas API's y más
+          </p>
+        </section>
+        <hr />
+        <section className="section-details-docs" id="herramientas">
+          <h3 className="title-details-docs">
+            Aquí la lista de herramientas del editor:
+          </h3>
+          <ul className="list-tools-docs">
+            <li className="tool-docs">Bloques de códigos</li>
+            <li className="tool-docs">Blockquotes</li>
+            <li className="tool-docs">Imagenes(a través de url solamente)</li>
+            <li className="tool-docs">Links</li>
+            <li className="tool-docs">Tablas</li>
+            <li className="tool-docs">Markdown</li>
+          </ul>
+        </section>
+        <hr />
+        <section className="section-details-docs" id="apis">
+          <h3 className="title-details-docs">API's</h3>
+          <p className="details-docs">
+            Ofrece 2 rutas para obtener todos tus artículos y otra para obtener
+            un solo artículo
+          </p>
 
-        <div className="container-credentials">
-          <h3 className="title-section">ID usuario</h3>
-          <p className="content-details">Tu ID de usuario</p>
-          <div className="box-credential">
-            <div className="back-credential">
-              <p className={`credential user-id no-show`}>
-                {show
-                  ? user.user_id
-                  : "-------------------------------------------------"}
+          <h4>Las API's son:</h4>
+          <ul className="list-apis">
+            <p className={`message-docs ${message ? "hidden-message" : ""}`}>
+                {message}
               </p>
-            </div>
+            <li className="item-api">
+              <div className="back-credential">
+                <p className="credential">{api_all_posts}</p>
+              </div>
+              <img
+                src={iconCopy.src}
+                alt="icon copy"
+                width={25}
+                height={25}
+                onClick={() => handleCopy(api_all_posts)}
+                className="icon-copy"
+              />
+            </li>
 
-            <button className="button-show" onClick={() => setShow(!show)}>
-              {show ? (
-                <img
-                  src={iconHidden.src}
-                  alt="icon eye hidden"
-                  width={25}
-                  height={25}
-                />
-              ) : (
-                <img
-                  src={iconVisible.src}
-                  alt="icon eye visible"
-                  width={25}
-                  height={25}
-                />
-              )}
-            </button>
+            <li className="item-api">
+              <div className="back-credential">
+                <p className="credential">{api_unique_post}</p>
+              </div>
+              <img
+                src={iconCopy.src}
+                alt="icon copy"
+                width={25}
+                height={25}
+                onClick={() => handleCopy(api_unique_post)}
+                className="icon-copy"
+              />
+ 
+            </li>
+          </ul>
+        </section>
+
+        <hr />
+        <section className="section-details-docs" id="credenciales">
+          <h3 className="title-details-docs">Credenciales</h3>
+          <p className="details-docs">
+            La unica credencial que necesitas es tu user_id para poder traer tus
+            artículos desde donde tu lo necesites
+          </p>
+          <div className="container-credentials">
+            <h3 className="title-section">ID usuario</h3>
+            <p className="content-details">Tu ID de usuario</p>
+            <div className="box-credential">
+              <div className="back-credential">
+                <p className={`credential user-id no-show`}>
+                  {show ? user.user_id : ""}
+                </p>
+              </div>
+
+              <button className="button-show" onClick={() => setShow(!show)}>
+                {show ? (
+                  <img
+                    src={iconHidden.src}
+                    alt="icon eye hidden"
+                    width={25}
+                    height={25}
+                  />
+                ) : (
+                  <img
+                    src={iconVisible.src}
+                    alt="icon eye visible"
+                    width={25}
+                    height={25}
+                  />
+                )}
+              </button>
+            </div>
           </div>
           <p className="note-credential">
             Nota: No compartas con nadie tu id de usuario y url, usar variables
             de entorno en desarrollo y producción para la seguridad de tu
             contenido
           </p>
-        </div>
+        </section>
       </section>
     </main>
   );

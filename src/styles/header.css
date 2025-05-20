@@ -3,7 +3,7 @@
     padding: 10px;
     position: fixed;
     z-index: 999;
-    background-color: #222d40;
+    background-color: #050505;
 }
 
 .nav {
@@ -32,14 +32,14 @@
     font-weight: 500;
     transition: .5s;
     text-align: center;
-    color: #fff;
+    color: #b3b3b3;
     text-decoration: none;
     border: none; 
 }
 
 .link-nav:hover {
-    text-shadow: 0 0 20px #fff;
-    transition: .5s;
+    color: #fff;
+    transition: color .5s;
 }
 
 .container-logout {
@@ -60,6 +60,7 @@
 
 .name-user {
     font-size: 15px;
+    color: #ddd;
 }
 
 .button-nav {

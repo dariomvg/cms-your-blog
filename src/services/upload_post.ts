@@ -7,6 +7,7 @@ export const upload_post = async (post: {
   keyboards: string;
   is_public: boolean;
   content: string;
+  created_at: string;
 }) => {
   console.log(post)
   const { data, error } = await supabase.from("posts").insert([post]).select();

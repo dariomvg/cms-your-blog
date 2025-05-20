@@ -24,6 +24,7 @@
     "@tiptap/extension-text-style": "^2.11.7",
     "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
+    "format-all-dates": "^1.0.4",
     "lowlight": "^3.3.0",
     "marked": "^15.0.8",
     "next": "15.3.0",

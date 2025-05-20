@@ -12,7 +12,7 @@
 .control-group button {
     border-radius: 5px;
     padding: 8px; 
-    background-color: #101010;
+    background-color: #151621;
     color: #ddd;
     font-weight: 500;
     font-size: 14px;
@@ -22,16 +22,15 @@
     display: flex;
     gap: 3px;
     align-items: center;
-    box-shadow: 0 5px 10px #171f3c;
+    transition: border .5s;
 }
-
 .control-group button:hover {
-    border-color: #2b93fa;
-    transition: .5s;
+    border-color: #4d527d;
+    transition: border .5s;
 }
 
 .is-active {
-    border-color: #1d60e7;
+    border-color: #2b2e46;
 }
 
 .section-elements {

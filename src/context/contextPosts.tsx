@@ -9,6 +9,7 @@ import { upload_post } from "../services/upload_post";
 import { useEditorConfig } from "../hooks/useEditorConfig";
 import { marked } from "marked";
 import { useAuth } from "./ContextAuth";
+import { getSecondDate } from "format-all-dates";
 
 const ContextPosts = createContext<ContextPostsProps | null>(null);
 
@@ -73,6 +74,7 @@ export default function ProviderPosts({ children }: { children: ReactNode }) {
         const result = await update_post({
           ...post,
           is_public: isPublic,
+          updated: getSecondDate(),
           content,
         });
         console.log(result);
@@ -85,6 +87,7 @@ export default function ProviderPosts({ children }: { children: ReactNode }) {
           description: post.description,
           keyboards: post.keyboards,
           is_public: isPublic,
+          created_at: getSecondDate(),
           content,
         });
         console.log(result);
@@ -96,7 +99,6 @@ export default function ProviderPosts({ children }: { children: ReactNode }) {
       setPost(obj_post);
     }
   };
-
 
   return (
     <ContextPosts.Provider

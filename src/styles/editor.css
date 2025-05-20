@@ -1,63 +1,88 @@
-.editor {
+.main-editor {
   width: 100%;
-  padding: 60px 10px 10px 10px;
-}
-
-.form {
-  width: 50%;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  padding: 70px 10px 10px 10px;
   gap: 10px;
-  padding: 10px 0;
 }
 
 .title-form {
   color: #fff;
+
 }
 
-.container-input {
+.section-metadates {
+  width: 30%;
+}
+
+.section-editor {
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  position: relative;
 }
 
-.check {
-  flex-direction: row;
+.container-buttons-form {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding-bottom: 10px;
+  gap: 10px;
 }
 
-.label-form {
-  color: #ddd;
+.section-metadates {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.container-input-metadates {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label-metadates {
+  color: #aaa; 
   font-size: 16px;
   font-weight: 500;
 }
 
-.input-form {
-  width: 100%;
+.input-metadates {
   padding: 10px;
-  background-color: #101010;
-  border: 1px solid transparent;
   border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #151621;
+  font-size: 16px;
   outline: none;
   color: #fff;
+}
+
+.input-metadates:focus {
+  border-color: #2b2e46;
+}
+
+.check {
+  flex-direction: row;
+}
+
+.toggle-chat-ai {
   font-size: 16px;
+  background-color: transparent;
+  border: none;
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.5s;
 }
 
-.input-form:focus {
-  border-color: #2b93fa;
+.toggle-chat-ai:hover {
+  color: #51588a;
+  transition: color 0.5s;
 }
-
-.container-buttons-form {
-  display: flex; 
-  gap: 8px; 
-  align-items: center;
-  margin-top: 8px;
-}
-
 .button-form {
-  width: 10%;
+
   padding: 10px;
   border: none;
   background-color: #ddd;
@@ -87,20 +112,107 @@
   color: #909090;
 }
 
-.check-label {
-  display: flex;
-  gap: 10px; 
-}
-
-@media (max-width: 768px) {
-  .form {
+@media (max-width: 425px) {
+  .main-editor {
+    flex-direction: column;
+    height: auto;
+  }
+  .section-metadates {
     width: 100%; 
   }
-  .container-buttons-form {
-    width: 100%
-  }
-
-  .button-form {
-    width: 100%; 
+  .section-editor {
+    width: 100%;
   }
 }
+
+.tiptap {
+  height: 100%;
+  background-color: #11121a;
+  color: #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.tiptap:focus {
+  outline: none;
+}
+
+.tiptap ol {
+  padding: 0 10px;
+  margin-left: 8px;
+}
+.tiptap ul {
+  padding: 0 10px;
+  margin-left: 8px;
+}
+.tiptap li p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+pre {
+  background: #1a1b26;
+  border-radius: 5px;
+  color: #fff;
+
+  padding: 8px;
+}
+
+code {
+  background: none;
+  color: inherit;
+  font-size: 14px;
+  padding: 0;
+}
+
+a {
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; 
+  
+}
+
+th {
+  background-color: #000;
+  color: #fff; 
+  padding: 10px;
+
+}
+
+td {
+  background-color: #ddd; 
+  padding: 10px;
+  color: #000;
+}
+
+th, td {
+  border: 1px solid #aaa;
+  position:relative; 
+}
+th::after,
+td::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;   
+  height: 100%;
+  cursor: col-resize;
+}
+table tr {
+  border-bottom: 1px solid #aaa; 
+}
+
+
+blockquote {
+  color: #ddd; 
+  border-left: 4px solid #ddd;
+  background-image: linear-gradient(to right, #2a2a2a81, transparent 20%);
+  padding:3px 10px;
+  font-style: italic;
+  font-size: 16px;
+}
+

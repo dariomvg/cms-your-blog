@@ -1,6 +1,6 @@
 "use client";
 
-import "../styles/header.css";
+import "@/styles/header.css";
 import { useAuth } from "../context/ContextAuth";
 import iconGoogle from "../assets/google.svg";
 import iconMenu from "../assets/menu.svg";
@@ -11,23 +11,33 @@ import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const { login, logout, user } = useAuth();
-  const [active, setActive] = useState<boolean>(false); 
-  const router = useRouter(); 
+  const [active, setActive] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleLogout = () => {
-    logout(); 
-    router.push("/")
-  }
+    logout();
+    router.push("/");
+  };
   return (
     <header className="header">
       <nav className="nav">
         <Link href="/" className="link-title-header">
           CMS Blog
         </Link>
-        <img src={iconMenu.src} alt="icon menu" width={35} height={35} className="icon-menu" onClick={() => setActive(!active)} />
+        <img
+          src={iconMenu.src}
+          alt="icon menu"
+          width={35}
+          height={35}
+          className="icon-menu"
+          onClick={() => setActive(!active)}
+        />
         <div className={`container-nav-links ${active ? "active" : ""}`}>
-          <Link href="/posts" className="link-nav">
-            Artículos
+          <Link href="/editor/post" className="link-nav">
+            Crear artículo
+          </Link>
+          <Link href="/dashboard" className="link-nav">
+            Dashboard
           </Link>
           <Link href="/docs" className="link-nav">
             Docs
@@ -51,11 +61,15 @@ export const Header = () => {
           ) : (
             <button className="button-nav login" onClick={login}>
               Iniciar sesión
-              <img src={iconGoogle.src} alt="google icon" width={20} height={20} />
+              <img
+                src={iconGoogle.src}
+                alt="google icon"
+                width={20}
+                height={20}
+              />
             </button>
           )}
         </div>
-        
       </nav>
     </header>
   );

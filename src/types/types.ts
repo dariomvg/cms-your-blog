@@ -13,6 +13,7 @@ export interface Post {
   keyboards: string;
   content: string;
   is_public: boolean | null;
+  updated: string | null;
 }
 
 export interface ContextPostsProps {

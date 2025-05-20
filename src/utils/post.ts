@@ -7,4 +7,5 @@ export const obj_post = {
   keyboards: "",
   content: "",
   is_public: null,
+  updated: null,
 };
