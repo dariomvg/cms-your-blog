@@ -22,10 +22,14 @@ export const usePosts = (idPost?: number): UsePostsProps => {
       if (idPost) {
         try {
           const editPost = await get_post(idPost);
-          const codeHtml = await marked(editPost[0].content);
-          if (editPost[0]) {
-            setHtml(codeHtml);
+          if (editPost && editPost[0]) {
+            const codeHtml = await marked.parse(editPost[0].content || '');
             setPost(editPost[0]);
+            setIsPublic(editPost[0].is_public ?? true);
+            // Asegurarse de que el HTML se establezca después de que el post esté cargado
+            setTimeout(() => {
+              setHtml(codeHtml);
+            }, 0);
           }
         } catch (error) {
           console.error("Error fetching post:", error);
