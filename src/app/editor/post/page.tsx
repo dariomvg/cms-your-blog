@@ -13,8 +13,7 @@ function EditorPostContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const idPost = searchParams?.get("idPost");
-  
-  if (!idPost) return null;
+  const postId = idPost ? parseInt(idPost) : undefined;
   const { extensions } = useEditorConfig();
   const {
     html,
@@ -24,7 +23,7 @@ function EditorPostContent() {
     changeEditor,
     changeInput,
     changeIsPublic
-  } = usePosts(parseInt(idPost));
+  } = usePosts(postId);
 
   const handleSubmit = () => {
     submitPost();

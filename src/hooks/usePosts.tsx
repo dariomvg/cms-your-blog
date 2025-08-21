@@ -10,7 +10,7 @@ import { useEditorConfig } from "./useEditorConfig";
 import { useAuth } from "@/context/ContextAuth";
 import { get_post } from "@/services/get_post";
 
-export const usePosts = (idPost: number): UsePostsProps => {
+export const usePosts = (idPost?: number): UsePostsProps => {
   const [post, setPost] = useState<Post>(obj_post);
   const [html, setHtml] = useState<string>("");
   const [isPublic, setIsPublic] = useState<boolean>(true);
@@ -18,17 +18,21 @@ export const usePosts = (idPost: number): UsePostsProps => {
   const { converterToMarkdown } = useEditorConfig();
 
   useEffect(() => {
-    if (idPost) {
-      const getPostToUpdate = async () => {
-        const editPost = await get_post(idPost);
-        const codeHtml = await marked(editPost[0]?.content);
-        if (codeHtml) {
-            setHtml(codeHtml)
-            setPost(editPost[0])
-        };
-      };
-      getPostToUpdate();
-    }
+    const getPostToUpdate = async () => {
+      if (idPost) {
+        try {
+          const editPost = await get_post(idPost);
+          if (editPost[0]) {
+            const codeHtml = await marked(editPost[0].content);
+            setHtml(codeHtml);
+            setPost(editPost[0]);
+          }
+        } catch (error) {
+          console.error("Error fetching post:", error);
+        }
+      }
+    };
+    getPostToUpdate();
   }, [idPost]);
 
   const submitPost = async () => {
