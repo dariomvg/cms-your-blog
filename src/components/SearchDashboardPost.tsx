@@ -34,14 +34,14 @@ export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
               <div className="container-post">
                 <h4>{post.title}</h4>
                 <p>{post.created_at}</p>
-                <Link href={`preview/post/${post.id}`} className="link-post-update">
+                <Link href={`preview/post/${post.id}`} className="link-post">
                   Ver artículo
                 </Link>
               </div>
               <div className="container-links-posts">
                 <Link
                   href={`/editor/post?idPost=${post.id}`}
-                  className="button-post update">
+                  className="link-post-update">
                   Editar
                 </Link>
                 <button

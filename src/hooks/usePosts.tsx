@@ -22,8 +22,8 @@ export const usePosts = (idPost?: number): UsePostsProps => {
       if (idPost) {
         try {
           const editPost = await get_post(idPost);
+          const codeHtml = await marked(editPost[0].content);
           if (editPost[0]) {
-            const codeHtml = await marked(editPost[0].content);
             setHtml(codeHtml);
             setPost(editPost[0]);
           }
