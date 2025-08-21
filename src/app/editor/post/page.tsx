@@ -7,12 +7,14 @@ import "@/styles/editor.css";
 import Link from "next/link";
 import { RequireAuth } from "@/components/RequireAuth";
 import { usePosts } from "@/hooks/usePosts";
+import { Suspense } from "react";
 
-export default function EditorPost() {
+function EditorPostContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const idPost = searchParams?.get("idPost");
-  if (!idPost) return;
+  
+  if (!idPost) return null;
   const { extensions } = useEditorConfig();
   const {
     html,
@@ -121,5 +123,13 @@ export default function EditorPost() {
         </section>
       </main>
     </RequireAuth>
+  );
+}
+
+export default function EditorPost() {
+  return (
+    <Suspense fallback={<div className="main-editor">Cargando editor...</div>}>
+      <EditorPostContent />
+    </Suspense>
   );
 }
