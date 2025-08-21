@@ -9,3 +9,4 @@ export const obj_post = {
   is_public: null,
   updated: null,
 };
+

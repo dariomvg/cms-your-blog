@@ -1,25 +1,26 @@
-"use client"
 import ReactMarkdown from "react-markdown";
-import { useGetPosts } from "@/hooks/useGetPosts";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/tokyo-night-dark.css";
 import "@/styles/post.css";
-import { useParams } from "next/navigation";
+import { get_post } from "@/services/get_post";
 
-export default function Post() {
-  const { id } = useParams<{id: string | undefined}>();
-  if (!id) return;
-  const { post } = useGetPosts(null, parseInt(id));
+interface PropsParamsPost {
+  params: Promise<{id: string}>
+}
+
+export default async function Post({params}: PropsParamsPost) {
+  const {id} = await params
+  const post = await get_post(parseInt(id));
 
   return (
     <main className="page-post">
       <div className="markdown-dark">
-        {post.content && (
+        {post && post[0].content && (
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}>
-            {post.content}
+            {post[0].content}
           </ReactMarkdown>
         )}
       </div>

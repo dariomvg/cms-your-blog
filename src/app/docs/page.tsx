@@ -6,6 +6,7 @@ import iconHidden from "@/assets/hidden.svg";
 import iconCopy from "@/assets/copy.svg";
 import "@/styles/docs.css";
 import { api_all_posts, api_unique_post } from "@/utils/options";
+import { RequireAuth } from "@/components/RequireAuth";
 
 export default function Docs() {
   const [show, setShow] = useState<boolean>(false);
@@ -21,7 +22,8 @@ export default function Docs() {
   };
 
   return (
-    <main className="main-docs">
+    <RequireAuth>
+      <main className="main-docs">
       <aside className="aside-docs">
         <h1 className="title-aside-docs">Documentación</h1>
         <div className="container-links-docs">
@@ -151,5 +153,7 @@ export default function Docs() {
         </section>
       </section>
     </main>
+    </RequireAuth>
+    
   );
 }
