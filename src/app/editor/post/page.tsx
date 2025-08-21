@@ -22,7 +22,8 @@ function EditorPostContent() {
     submitPost,
     changeEditor,
     changeInput,
-    changeIsPublic
+    changeIsPublic,
+    setHtml
   } = usePosts(postId);
 
   const handleSubmit = () => {
@@ -108,7 +109,7 @@ function EditorPostContent() {
             slotBefore={<NavEditor />}
             extensions={extensions}
             content={html}
-            onUpdate={({ editor }) => changeEditor(editor)}
+            onUpdate={({ editor }) => setHtml(editor.getHTML())}
           />
           <div className="container-buttons-form">
             <button className="button-form" onClick={handleSubmit}>

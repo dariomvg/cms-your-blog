@@ -1,7 +1,7 @@
 import { ColorOptions } from "@tiptap/extension-color";
 import { LinkOptions } from "@tiptap/extension-link";
 import { StarterKitOptions } from "@tiptap/starter-kit";
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import {Extension, Node, Mark} from "@tiptap/react"
 
 export interface Post {
@@ -24,6 +24,7 @@ export interface UsePostsProps {
   isPublic: boolean; 
   changeInput: (e: ChangeEvent<HTMLInputElement>) => void;
   changeIsPublic: (e: ChangeEvent<HTMLInputElement>) => void; 
+  setHtml: Dispatch<SetStateAction<string>>
 }
 
 export interface UseEditorConfig {

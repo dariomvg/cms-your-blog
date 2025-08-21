@@ -89,7 +89,8 @@ export const usePosts = (idPost?: number): UsePostsProps => {
     post,
     isPublic,
     changeInput,
-    changeIsPublic
+    changeIsPublic,
+    setHtml
 
   };
 };
