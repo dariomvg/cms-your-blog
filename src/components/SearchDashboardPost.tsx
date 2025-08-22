@@ -40,7 +40,7 @@ export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
               </div>
               <div className="container-links-posts">
                 <Link
-                  href={`/editor/post?idPost=${post.id}`}
+                  href={`/editor/post/${post.id}`}
                   className="link-post-update">
                   Editar
                 </Link>

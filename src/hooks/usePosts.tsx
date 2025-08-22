@@ -4,42 +4,27 @@ import { upload_post } from "@/services/upload_post";
 import { Post, UsePostsProps } from "@/types/types";
 import { obj_post } from "@/utils/post";
 import { getSecondDate } from "format-all-dates";
-import { marked } from "marked";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useEditorConfig } from "./useEditorConfig";
 import { useAuth } from "@/context/ContextAuth";
 import { get_post } from "@/services/get_post";
 
 export const usePosts = (idPost?: number): UsePostsProps => {
   const [post, setPost] = useState<Post>(obj_post);
-  const [html, setHtml] = useState<string>("");
+
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const { user } = useAuth();
   const { converterToMarkdown } = useEditorConfig();
 
-  useEffect(() => {
-    const getPostToUpdate = async () => {
-      if (idPost) {
-        try {
-          const editPost = await get_post(idPost);
-          if (editPost && editPost[0]) {
-            const codeHtml = await marked.parse(editPost[0].content || '');
-            setPost(editPost[0]);
-            setIsPublic(editPost[0].is_public ?? true);
-            // Asegurarse de que el HTML se establezca después de que el post esté cargado
-            setTimeout(() => {
-              setHtml(codeHtml);
-            }, 0);
-          }
-        } catch (error) {
-          console.error("Error fetching post:", error);
-        }
-      }
-    };
-    getPostToUpdate();
-  }, [idPost]);
+  const findPost = async (postId: number) => {
+    const newPost = await get_post(postId); 
+    if(newPost[0]){
+      setPost(newPost[0])
+    } 
+    return newPost
+  }
 
-  const submitPost = async () => {
+  const submitPost = async (html: string) => {
     try {
       if (!user.user_id) return;
       const content = converterToMarkdown(html);
@@ -50,7 +35,7 @@ export const usePosts = (idPost?: number): UsePostsProps => {
           updated: getSecondDate(),
           content,
         });
-        console.log("actualizado: ",result);
+        console.log("actualizado: ", result);
       }
 
       if (!post.id && content !== undefined) {
@@ -63,21 +48,16 @@ export const usePosts = (idPost?: number): UsePostsProps => {
           created_at: getSecondDate(),
           content,
         });
-        console.log("Creado: ",result);
+        console.log("Creado: ", result);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setHtml("");
       setPost(obj_post);
     }
   };
 
-  const changeEditor = (editor: any) => {
-    setHtml(editor.getHTML());
-  };
-
-    const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPost((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -88,13 +68,10 @@ export const usePosts = (idPost?: number): UsePostsProps => {
 
   return {
     submitPost,
-    html,
-    changeEditor,
     post,
     isPublic,
     changeInput,
     changeIsPublic,
-    setHtml
-
+    findPost
   };
 };

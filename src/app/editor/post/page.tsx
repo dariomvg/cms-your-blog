@@ -1,35 +1,50 @@
 "use client";
 import { useEditorConfig } from "@/hooks/useEditorConfig";
 import { EditorProvider } from "@tiptap/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { NavEditor } from "@/components/NavEditor";
 import "@/styles/editor.css";
 import Link from "next/link";
 import { RequireAuth } from "@/components/RequireAuth";
 import { usePosts } from "@/hooks/usePosts";
-import { Suspense } from "react";
+import { useEffect, useState } from "react";
+import { marked } from "marked";
 
-function EditorPostContent() {
+export default function EditorPostContent() {
+  const params = useParams<{ idPost: string }>();
+  const postId = params?.idPost ? parseInt(params.idPost) : undefined;
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const idPost = searchParams?.get("idPost");
-  const postId = idPost ? parseInt(idPost) : undefined;
   const { extensions } = useEditorConfig();
-  const {
-    html,
-    post, 
-    isPublic,
-    submitPost,
-    changeEditor,
-    changeInput,
-    changeIsPublic,
-    setHtml
-  } = usePosts(postId);
+  const { post, isPublic, submitPost, changeInput, changeIsPublic, findPost } =
+    usePosts(postId);
+  const [html, setHtml] = useState<string>("");
 
   const handleSubmit = () => {
-    submitPost();
+    submitPost(html);
+    setHtml("");
     router.push("/dashboard");
   };
+
+  const content = `<h1>Guia completa para iniciar en desarrollo web front-end y back-end 2025</h1>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus accusamus esse, error explicabo id sit quidem quia possimus magnam quod ipsum exercitationem modi optio necessitatibus. Nemo vel voluptas blanditiis perferendis.</p>
+`
+  useEffect(() => {
+    if (postId) {
+      const getPostToUpdate = async () => {
+        try {
+          // const editPost = await findPost(postId);
+          const data = await marked.parse(content);
+          setHtml(data);
+          if (data) {
+            console.log(data)
+          }
+        } catch (error) {
+          console.error("Error al cargar el post:", error);
+        }
+      };
+      getPostToUpdate();
+    }
+  }, [postId]);
 
   return (
     <RequireAuth>
@@ -84,9 +99,9 @@ function EditorPostContent() {
 
           <div className="container-input-metadates check">
             <label htmlFor="is_public" className="label-metadates">
-              {isPublic !== null ? (
+              {post.is_public !== null ? (
                 <div className="check-label">
-                  <p>Actualmente {isPublic ? "público" : "privado"}</p>
+                  <p>Actualmente {post.is_public ? "público" : "privado"}</p>
                   <p>Cambiar a {isPublic ? "privado" : "público"}</p>
                 </div>
               ) : (
@@ -106,11 +121,13 @@ function EditorPostContent() {
         </section>
         <section className="section-editor">
           <EditorProvider
+            immediatelyRender={false}
             slotBefore={<NavEditor />}
             extensions={extensions}
             content={html}
             onUpdate={({ editor }) => setHtml(editor.getHTML())}
           />
+
           <div className="container-buttons-form">
             <button className="button-form" onClick={handleSubmit}>
               {post.id ? "Actualizar" : "Agregar"}
@@ -123,13 +140,5 @@ function EditorPostContent() {
         </section>
       </main>
     </RequireAuth>
-  );
-}
-
-export default function EditorPost() {
-  return (
-    <Suspense fallback={<div className="main-editor">Cargando editor...</div>}>
-      <EditorPostContent />
-    </Suspense>
   );
 }
