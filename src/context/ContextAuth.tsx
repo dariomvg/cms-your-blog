@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   createContext,
   ReactNode,
@@ -7,9 +7,8 @@ import {
   useState,
 } from "react";
 import { UseAuth, User } from "../types/types";
-import { supabase } from "../supabase/supabase";
 import { obj_user } from "../utils/user";
-import { urlApp } from "@/utils/options";
+import { get_user } from "@/services/get_user";
 
 const ContextAuth = createContext<UseAuth | null>(null);
 
@@ -22,35 +21,10 @@ export const useAuth = (): UseAuth => {
 export default function ProviderAuth({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>(obj_user);
 
-  const login = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: urlApp,
-      },
-    });
-
-    if (error) {
-      console.error("Error al iniciar sesión", error.message);
-    }
-    console.log(data);
-  };
-
-  const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) console.error("Error al cerrar sesión", error.message);
-    setUser(obj_user);
-  };
-
   useEffect(() => {
     const getSession = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) {
-        console.error("Error al obtener la sesión", error.message);
-        return;
-      }
-
-      const user = data.session?.user;
+      const data = await get_user();
+      const user = data?.session?.user;
 
       if (user) {
         setUser({
@@ -67,8 +41,6 @@ export default function ProviderAuth({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <ContextAuth.Provider value={{ user, login, logout }}>
-      {children}
-    </ContextAuth.Provider>
+    <ContextAuth.Provider value={{ user }}>{children}</ContextAuth.Provider>
   );
 }

@@ -9,7 +9,9 @@ export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
   const [search, setSearch] = useState<string>("");
 
   const removePost = async (id: number | null) => {
-    if (id) await delete_post(id);
+    if (id) {
+      const results = await delete_post(id);
+    };
   };
 
   const filteredPosts = posts.filter((item) =>

@@ -1,45 +1,62 @@
 "use client";
-import { update_post } from "@/services/update_post";
-import { upload_post } from "@/services/upload_post";
 import { Post, UsePostsProps } from "@/types/types";
 import { obj_post } from "@/utils/post";
 import { getSecondDate } from "format-all-dates";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useEditorConfig } from "./useEditorConfig";
 import { useAuth } from "@/context/ContextAuth";
+import { marked } from "marked";
 import { get_post } from "@/services/get_post";
+import { update_post } from "@/services/update_post";
+import { upload_post } from "@/services/upload_post";
 
 export const usePosts = (idPost?: number): UsePostsProps => {
   const [post, setPost] = useState<Post>(obj_post);
-
   const [isPublic, setIsPublic] = useState<boolean>(true);
-  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [html, setHtml] = useState<string | null>(null);
   const { converterToMarkdown } = useEditorConfig();
+  const { user } = useAuth();
 
-  const findPost = async (postId: number) => {
-    const newPost = await get_post(postId); 
-    if(newPost[0]){
-      setPost(newPost[0])
-    } 
-    return newPost
-  }
+  useEffect(() => {
+    const getPostToUpdate = async () => {
+      try {
+        if (idPost) {
+          setLoading(true);
+          const editPost = await get_post(idPost);
+          if (editPost) {
+            const data = await marked.parse(editPost.content);
+            setPost(editPost);
+            setHtml(data);
+          }
+        }
+      } catch (error) {
+        console.error("Error al cargar el post:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const submitPost = async (html: string) => {
+    getPostToUpdate();
+  }, [idPost]);
+
+  const submitPost = async () => {
     try {
       if (!user.user_id) return;
+      if (!html) return;
       const content = converterToMarkdown(html);
       if (post.id && content !== undefined) {
-        const result = await update_post({
+        const results = await update_post({
           ...post,
           is_public: isPublic,
           updated: getSecondDate(),
           content,
         });
-        console.log("actualizado: ", result);
+        console.log(results);
       }
 
       if (!post.id && content !== undefined) {
-        const result = await upload_post({
+        const results = await upload_post({
           title: post.title,
           user_id: user.user_id,
           description: post.description,
@@ -48,12 +65,13 @@ export const usePosts = (idPost?: number): UsePostsProps => {
           created_at: getSecondDate(),
           content,
         });
-        console.log("Creado: ", result);
+        console.log(results);
       }
     } catch (error) {
       console.log(error);
     } finally {
       setPost(obj_post);
+      setHtml(null);
     }
   };
 
@@ -66,12 +84,18 @@ export const usePosts = (idPost?: number): UsePostsProps => {
     setIsPublic(e.target.checked);
   };
 
+  const changeEditor = (editor: any) => {
+    setHtml(editor.getHTML());
+  };
+
   return {
     submitPost,
     post,
     isPublic,
     changeInput,
     changeIsPublic,
-    findPost
+    html,
+    changeEditor,
+    loading,
   };
 };

@@ -1,7 +1,7 @@
 import { ColorOptions } from "@tiptap/extension-color";
 import { LinkOptions } from "@tiptap/extension-link";
 import { StarterKitOptions } from "@tiptap/starter-kit";
-import { ChangeEvent, Dispatch, RefObject, SetStateAction } from "react";
+import { ChangeEvent } from "react";
 import {Extension, Node, Mark} from "@tiptap/react"
 
 export interface Post {
@@ -17,12 +17,14 @@ export interface Post {
 }
 
 export interface UsePostsProps {
-  submitPost: (html: string) => void;
+  submitPost: () => void;
   post: Post;
   isPublic: boolean; 
   changeInput: (e: ChangeEvent<HTMLInputElement>) => void;
   changeIsPublic: (e: ChangeEvent<HTMLInputElement>) => void;
-  findPost: (postId: number) => Promise<Post[]>; 
+  changeEditor: (editor: any) => void; 
+  html: string | null; 
+  loading: boolean; 
 }
 
 export interface UseEditorConfig {
@@ -45,8 +47,6 @@ export interface User {
 
 export interface UseAuth {
   user: User;
-  login: () => void;
-  logout: () => void;
 }
 
 

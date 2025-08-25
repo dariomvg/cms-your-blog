@@ -78,6 +78,10 @@ hr {
   gap: 5px;
 }
 
+.title-section-dashboard {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 768px) {
   .dashboard-config {
     flex-direction: column;

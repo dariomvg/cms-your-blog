@@ -7,44 +7,27 @@ import "@/styles/editor.css";
 import Link from "next/link";
 import { RequireAuth } from "@/components/RequireAuth";
 import { usePosts } from "@/hooks/usePosts";
-import { useEffect, useState } from "react";
-import { marked } from "marked";
 
 export default function EditorPostContent() {
   const params = useParams<{ idPost: string }>();
   const postId = params?.idPost ? parseInt(params.idPost) : undefined;
   const router = useRouter();
   const { extensions } = useEditorConfig();
-  const { post, isPublic, submitPost, changeInput, changeIsPublic, findPost } =
-    usePosts(postId);
-  const [html, setHtml] = useState<string>("");
+  const {
+    post,
+    isPublic,
+    submitPost,
+    changeInput,
+    changeIsPublic,
+    html,
+    loading,
+    changeEditor,
+  } = usePosts(postId);
 
   const handleSubmit = () => {
-    submitPost(html);
-    setHtml("");
+    submitPost();
     router.push("/dashboard");
   };
-
-  const content = `<h1>Guia completa para iniciar en desarrollo web front-end y back-end 2025</h1>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus accusamus esse, error explicabo id sit quidem quia possimus magnam quod ipsum exercitationem modi optio necessitatibus. Nemo vel voluptas blanditiis perferendis.</p>
-`
-  useEffect(() => {
-    if (postId) {
-      const getPostToUpdate = async () => {
-        try {
-          // const editPost = await findPost(postId);
-          const data = await marked.parse(content);
-          setHtml(data);
-          if (data) {
-            console.log(data)
-          }
-        } catch (error) {
-          console.error("Error al cargar el post:", error);
-        }
-      };
-      getPostToUpdate();
-    }
-  }, [postId]);
 
   return (
     <RequireAuth>
@@ -120,13 +103,17 @@ export default function EditorPostContent() {
           </div>
         </section>
         <section className="section-editor">
-          <EditorProvider
-            immediatelyRender={false}
-            slotBefore={<NavEditor />}
-            extensions={extensions}
-            content={html}
-            onUpdate={({ editor }) => setHtml(editor.getHTML())}
-          />
+          {!loading ? (
+            <EditorProvider
+              immediatelyRender={false}
+              slotBefore={<NavEditor />}
+              extensions={extensions}
+              content={html || ""}
+              onUpdate={({ editor }) => changeEditor(editor)}
+            />
+          ) : (
+            <p className="title-loading-editor">Cargando...</p>
+          )}
 
           <div className="container-buttons-form">
             <button className="button-form" onClick={handleSubmit}>

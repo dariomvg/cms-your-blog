@@ -9,7 +9,7 @@
 
 .title-form {
   color: #fff;
-
+  font-size: 20px;
 }
 
 .section-metadates {
@@ -113,6 +113,12 @@
 
 .link-cancel-form:hover {
   box-shadow: 0 0 10px #bd4242;
+}
+
+.title-loading-editor {
+  font-size: 16px;
+  font-weight: 500; 
+  color: #aaa; 
 }
 
 @media (max-width: 425px) {

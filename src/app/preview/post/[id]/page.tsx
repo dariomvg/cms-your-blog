@@ -12,15 +12,15 @@ interface PropsParamsPost {
 export default async function Post({params}: PropsParamsPost) {
   const {id} = await params
   const post = await get_post(parseInt(id));
-
+  
   return (
     <main className="page-post">
       <div className="markdown-dark">
-        {post && post[0].content && (
+        {post !== null && post.content && (
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}>
-            {post[0].content}
+            {post.content}
           </ReactMarkdown>
         )}
       </div>

@@ -2,7 +2,6 @@ import { supabase } from "@/supabase/supabase";
 import { Post } from "@/types/types";
 
 export const update_post = async (post: Post) => {
-  console.log(post)
   const { data, error } = await supabase
     .from("posts")
     .update(post)
