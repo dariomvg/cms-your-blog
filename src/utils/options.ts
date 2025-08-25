@@ -6,6 +6,6 @@ export const supabaseKey = process.env.NEXT_PUBLIC_DATABASE_KEY;
 export const url_app =
   process.env.NEXT_PUBLIC_URL_APP ?? "http://localhost:3000";
 
-export const api_all_posts = `${url_app}/api/public/posts/your_user_id`;
+export const api_all_posts = `${url_app}/api/public/posts?user_id=your-user-id`;
 export const api_unique_post = `${url_app}/api/public/post?id=id-post&user_id=user-id`;
 
