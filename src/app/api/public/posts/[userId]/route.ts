@@ -7,7 +7,7 @@ export async function GET(
   req: Request,
   { params }: { params: { userId: string } }
 ) {
-  const { userId } = await params;
+  const { userId } = params;
 
   try {
     const posts = await get_posts_api(userId);
