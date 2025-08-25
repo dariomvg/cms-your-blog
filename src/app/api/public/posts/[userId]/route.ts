@@ -3,11 +3,15 @@
 import { get_posts_api } from "@/services/get_posts_api";
 import { NextResponse } from "next/server";
 
+interface Params {
+  userId : string
+}
+
 export async function GET(
   req: Request,
-  { params }: { params: Record<string, string> }
+   context: { params: Params }
 ) {
-  const { userId } = params;
+  const { userId } = context.params;
 
   try {
     const posts = await get_posts_api(userId);
