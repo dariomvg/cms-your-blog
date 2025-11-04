@@ -7,6 +7,7 @@ import "@/styles/editor.css";
 import Link from "next/link";
 import { RequireAuth } from "@/components/RequireAuth";
 import { usePosts } from "@/hooks/usePosts";
+import { SelectTopics } from "@/components/SelectTopics";
 
 export default function EditorPostContent() {
   const params = useParams<{ idPost: string }>();
@@ -22,6 +23,7 @@ export default function EditorPostContent() {
     html,
     loading,
     changeEditor,
+    changeTopic
   } = usePosts(postId);
 
   const handleSubmit = () => {
@@ -100,6 +102,9 @@ export default function EditorPostContent() {
               onChange={changeIsPublic}
               title="Selecciona para privarlo"
             />
+          </div>
+          <div className="container-input-metadates">
+            <SelectTopics changeTopic={changeTopic} topic={post.topic} />
           </div>
         </section>
         <section className="section-editor">

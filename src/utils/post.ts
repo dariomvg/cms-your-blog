@@ -5,6 +5,7 @@ export const obj_post = {
   title: "",
   description: "",
   keyboards: "",
+  topic: "",
   content: "",
   is_public: null,
   updated: null,

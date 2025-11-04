@@ -5,6 +5,7 @@ export const upload_post = async (post: {
   user_id: string
   description: string;
   keyboards: string;
+  topic: string;
   is_public: boolean;
   content: string;
   created_at: string;

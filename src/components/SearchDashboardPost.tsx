@@ -4,20 +4,28 @@ import "@/styles/search-dashboard-post.css";
 import { Post } from "@/types/types";
 import Link from "next/link";
 import { useState } from "react";
+import { ConfirmDeletePost } from "./ConfirmDeletePost";
 
 export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
   const [search, setSearch] = useState<string>("");
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [idPostToDelete, setIdPostToDelete] = useState<number | null>(null);
 
-  const removePost = async (id: number | null) => {
-    if (id) {
-      const results = await delete_post(id);
-    };
+  const openModalConfirm = (id: number | null) => {
+    setOpenModal(true);
+    setIdPostToDelete(id);
+  };
+
+  const confirmDelete = async (confirm: boolean) => {
+    if (confirm && idPostToDelete) {
+      await delete_post(idPostToDelete);
+    }
+    setOpenModal(false);
   };
 
   const filteredPosts = posts.filter((item) =>
     item.title.toLowerCase().includes(search.toLowerCase())
   );
-
   return (
     <section className="container-section-dashboard">
       <h3 className="title-section-dashboard">Tus artículos</h3>
@@ -35,6 +43,7 @@ export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
             <li className="post" key={post.id}>
               <div className="container-post">
                 <h4>{post.title}</h4>
+                <div className="badge-topic">{post.topic}</div>
                 <p>{post.created_at}</p>
                 <Link href={`preview/post/${post.id}`} className="link-post">
                   Ver artículo
@@ -47,7 +56,7 @@ export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
                   Editar
                 </Link>
                 <button
-                  onClick={() => removePost(post.id)}
+                  onClick={() => openModalConfirm(post.id)}
                   className="button-post delete">
                   Eliminar
                 </button>
@@ -55,6 +64,7 @@ export const SearchDashboardPost = ({ posts }: { posts: Post[] }) => {
             </li>
           ))}
       </ul>
+      <ConfirmDeletePost confirmDelete={confirmDelete} openModal={openModal} />
     </section>
   );
 };

@@ -24,23 +24,6 @@ export default function Docs() {
   return (
     <RequireAuth>
       <main className="main-docs">
-      <aside className="aside-docs">
-        <h1 className="title-aside-docs">Documentación</h1>
-        <div className="container-links-docs">
-          <a href="#inicio" className="link-docs">
-            Inicio
-          </a>
-          <a href="#herramientas" className="link-docs">
-            Herramientas
-          </a>
-          <a href="#apis" className="link-docs">
-            API's
-          </a>
-          <a href="#credenciales" className="link-docs">
-            Credenciales
-          </a>
-        </div>
-      </aside>
       <section className="section-page-docs">
         <section className="section-details-docs" id="inicio">
           <h2 className="title-details-docs">Gestor blog</h2>

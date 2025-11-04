@@ -61,6 +61,7 @@ export const usePosts = (idPost?: number): UsePostsProps => {
           user_id: user.user_id,
           description: post.description,
           keyboards: post.keyboards,
+          topic: post.topic || "Personal",
           is_public: isPublic,
           created_at: getSecondDate(),
           content,
@@ -88,6 +89,10 @@ export const usePosts = (idPost?: number): UsePostsProps => {
     setHtml(editor.getHTML());
   };
 
+  const changeTopic = (topic: string) => {
+    setPost((prevState) => ({ ...prevState, topic }));
+  };
+
   return {
     submitPost,
     post,
@@ -97,5 +102,6 @@ export const usePosts = (idPost?: number): UsePostsProps => {
     html,
     changeEditor,
     loading,
+    changeTopic,
   };
 };

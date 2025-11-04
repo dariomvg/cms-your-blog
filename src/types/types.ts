@@ -11,6 +11,7 @@ export interface Post {
   title: string;
   description: string;
   keyboards: string;
+  topic: string; 
   content: string;
   is_public: boolean | null;
   updated: string | null;
@@ -25,6 +26,7 @@ export interface UsePostsProps {
   changeEditor: (editor: any) => void; 
   html: string | null; 
   loading: boolean; 
+  changeTopic: (topic: string) => void;
 }
 
 export interface UseEditorConfig {
